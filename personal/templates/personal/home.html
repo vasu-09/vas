@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HomePage
+{% endblock %}
+
+{% block content %}
+
+<div class="container ">
+<h1>Welcome to Simple Quiz</h1>
+ <hr>
+<div class="container">
+{% load static %}
+    {% csrf_token %}
+    {% for q  in question%}
+    <table>
+            <tr>
+                <td class="text-primary">{{q.id}} ) {{q.question}} </td>
+            </tr>
+            <tr>
+                <td><input type = "radio" class="rb" name = {{q.id}} id="Option1" value="{{q.option_one}}">{{q.option_one}}</td>
+            </tr>
+            <tr>
+                <td><input type = "radio" class="rb" name = {{q.id}} id="Option2" value="{{q.option_two}}">{{q.option_two}}</td>
+            </tr>
+            <tr>
+                <td><input type = "radio" class="rb" name = {{q.id}} id="Option3" value="{{q.option_three}}">{{q.option_three}}</td>
+            </tr>
+            <tr>
+                <td><input type = "radio" class="rb" name = {{q.id}} id="Option4" value="{{q.option_four}}">{{q.option_four}}</td>
+            </tr>
+
+            <tr>
+                <td><label id="corans" class= "rb" style="display:none ; color : green"><b>The Correct Answer is : {{q.answer}}</b></label></td>
+            </tr>
+
+        </table>
+<hr>    
+    {% endfor %}
+    <br>
+    <input type="submit" class="btn btn-success" value="Submit" id="b1" onclick="getanswers()">
+    <br>
+    <b id="UserAnswers"></b>
+</div>
+    {% block script %}
+        <script>
+            $(document).ready(function(){
+                $("#b1").click(function(){
+                    $(".rb").show();
+                    $(".rd").attr("disabled", true);
+                });
+            });
+            function  getanswers()
+            {
+                document.getElementById("UserAnswers").innerHTML = '';
+                var e = document.getElementsByTagName("input");
+                for(i=0; i<=e.length; i++)
+                {
+                    if(e[i].type=="radio")
+                    {
+                        if (e[i].checked)
+                        {
+                            document.getElementById("UserAnswers").innerHTML+='Q '+e[i].name+' The Answer you are Selected is :'+e[i].value+'<br>';
+                        }
+                    }
+                }
+            }
+       
+        </script>
+    {% endblock script %}
+ 
+</div>
+{% endblock %}

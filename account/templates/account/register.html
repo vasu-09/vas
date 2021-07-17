@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}CreateAccout{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<style type="text/css">
+		.from-group {
+		width: 100%;
+		max-width: 530px;
+		padding: 25px;
+		margin: auto;
+		}
+	</style>
+
+	<form method="POST" class="from-group">
+		{% csrf_token %}
+		<h1 class="h3 mb-3 fw-normal">Register</h1>
+		{{ form|crispy }}
+		<button type="submit" class="btn btn-success">Register</button>
+	</form>
+{% endblock %}
